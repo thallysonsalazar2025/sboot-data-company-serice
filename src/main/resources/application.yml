@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: company-registry-service
+
+logging:
+  level:
+    root: INFO
+    br.com.client.companyregistry: DEBUG
