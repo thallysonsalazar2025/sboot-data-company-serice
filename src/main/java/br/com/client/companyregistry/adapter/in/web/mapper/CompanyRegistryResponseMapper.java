@@ -10,6 +10,8 @@ import br.com.client.companyregistry.domain.model.PayrollSettings;
 import br.com.client.companyregistry.domain.model.TaxProfile;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Component
 public class CompanyRegistryResponseMapper {
 
@@ -106,5 +108,12 @@ public class CompanyRegistryResponseMapper {
                 logoMetadata.fallbackText(),
                 logoMetadata.approvedForPayrollDocuments()
         );
+    }
+
+    public String normalizeCountryCode(String countryCode) {
+        if (countryCode == null || countryCode.isBlank() || "1".equals(countryCode.trim())) {
+            return "BR";
+        }
+        return countryCode.trim().toUpperCase(Locale.ROOT);
     }
 }

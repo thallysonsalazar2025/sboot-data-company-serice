@@ -47,4 +47,14 @@ class CompanyRegistryControllerIT {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("Validation Error"));
     }
+
+    @Test
+    void shouldFallbackCountryCodeToBrazilWhenValueIsBlank() throws Exception {
+        mockMvc.perform(get("/api/v1/companies/registry")
+                        .param("registrationNumber", "12345678000195")
+                        .param("countryCode", ""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").value("COMPANY-BR-001"))
+                .andExpect(jsonPath("$.countryCode").value("BR"));
+    }
 }

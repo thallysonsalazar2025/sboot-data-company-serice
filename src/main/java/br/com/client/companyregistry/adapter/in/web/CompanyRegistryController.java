@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/companies/registry")
+@RequestMapping("${app.api.company-registry-path}")
 @Validated
 public class CompanyRegistryController {
 
@@ -31,9 +31,10 @@ public class CompanyRegistryController {
     @GetMapping
     public CompanyRegistryResponse findCompany(
             @RequestParam @NotBlank String registrationNumber,
-            @RequestParam @NotBlank String countryCode
-    ) {
-        log.info("Received registry lookup request for registrationNumber={} and countryCode={}", registrationNumber, countryCode);
-        return mapper.toResponse(getCompanyRegistryUseCase.execute(registrationNumber, countryCode));
+            @RequestParam(required = false) String countryCode) {
+
+        String normalizedCountryCode = mapper.normalizeCountryCode(countryCode);
+        log.info("Received registry lookup request for registrationNumber={} and countryCode={}", registrationNumber, normalizedCountryCode);
+        return mapper.toResponse(getCompanyRegistryUseCase.execute(registrationNumber, normalizedCountryCode));
     }
 }

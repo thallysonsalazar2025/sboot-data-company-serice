@@ -2,6 +2,12 @@ spring:
   application:
     name: company-registry-service
 
+app:
+  api:
+    company-registry-path: /api/v1/companies/registry
+  registry:
+    key-separator: "::"
+
 logging:
   level:
     root: INFO
